@@ -110,7 +110,7 @@ void callletter(int letter){
     for (pos = 0; pos <= letters[letter][4]; pos += 1) { // goes from 0 degrees to 180 degrees
       s5.write(pos);
     }
-    delay(100);
+    delay(500);
     myservo.detach();  // attaches the servo on pin 9 to the servo object
     s2.detach();
     s3.detach();
