@@ -35,6 +35,6 @@ while True:
         else:
             ser.write(27)
         print(numsend)
-        time.sleep(2.1)
+        time.sleep(2.5)
         i += 1
         
