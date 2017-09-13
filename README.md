@@ -11,7 +11,7 @@ I am currently only spelling things out, I would like to make something like a s
 
 Parts to make one:
 4M Robotic Hand Kit
-5x Tower Pro Micro Servo 99
+5x Tower Pro Micro Servo 9g
 4 AA baterry pack
 Plenty of wires
 An Arduino Uno (any other arduino based microcontroller should work)
