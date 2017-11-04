@@ -1,11 +1,11 @@
 #include <Servo.h>
 
-Servo myservo;  // create servo object to control a servo
+Servo myservo;  // create servo objects to control fingers
 Servo s2;
 Servo s3;
 Servo s4;
 Servo s5;
-// twelve servo objects can be created on most boards
+// initiate the hand positions for each letter
 int letters[27][5]{
   //a
   {180,180,180,180,0},
@@ -66,6 +66,7 @@ int number;
 int pos = 0;    // variable to store the servo position
 
 void setup() {
+  //Start the serial, which is vital to communicating with the computer
   Serial.begin(9600);
   
   
@@ -75,47 +76,55 @@ void setup() {
 
 
 void loop() {
-  
+  //Check if the serial has sent a letter then...
   if (Serial.available() > 0){
-    
+    //...read that letter...
     String string = Serial.readString();
+    //...Convert it into a string for use with the array...
     number = string.toInt();
+    //...And call the function that sets the hand position
     callletter(number);
     delay(1000);
   }
 }
+//Set the hand position
 void callletter(int letter){
-  
+    
     letter = letter - 1;
+    //End serial so I can connect to servos
     Serial.println(letter);
     Serial.end();
-    myservo.attach(9,0,letters[letter][0]);  // attaches the servo on pin 9 to the servo object
+    //Attach servos
+    myservo.attach(9,0,letters[letter][0]);  
     s2.attach(11,0,letters[letter][1]);
     s3.attach(10,0,letters[letter][2]);
     s4.attach(6,0,letters[letter][3]);
     s5.attach(5,0,letters[letter][4]);
-    for (pos = 0; pos <= letters[letter][0]; pos += 1) { // goes from 0 degrees to 180 degrees
+    //Write the position to servos
+    for (pos = 0; pos <= letters[letter][0]; pos += 1) {
       myservo.write(pos);
       
     }
-    for (pos = 0; pos <= letters[letter][1]; pos += 1) { // goes from 0 degrees to 180 degrees
+    for (pos = 0; pos <= letters[letter][1]; pos += 1) {
       s2.write(pos);
     }
-    for (pos = 0; pos <= letters[letter][2]; pos += 1) { // goes from 0 degrees to 180 degrees
+    for (pos = 0; pos <= letters[letter][2]; pos += 1) {
       s3.write(pos);
     }
-    for (pos = 0; pos <= letters[letter][3]; pos += 1) { // goes from 0 degrees to 180 degrees
+    for (pos = 0; pos <= letters[letter][3]; pos += 1) {
       s4.write(pos);
     }
-    for (pos = 0; pos <= letters[letter][4]; pos += 1) { // goes from 0 degrees to 180 degrees
+    for (pos = 0; pos <= letters[letter][4]; pos += 1) {
       s5.write(pos);
     }
     delay(500);
-    myservo.detach();  // attaches the servo on pin 9 to the servo object
+    //detach servos so serial can reconnect
+    myservo.detach(); 
     s2.detach();
     s3.detach();
     s4.detach();
     s5.detach();
+    //Reconnect serial
     Serial.begin(9600);
 }
 
